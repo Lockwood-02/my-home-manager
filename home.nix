@@ -4,6 +4,7 @@
   nixpkgs.config.allowUnfree = true;
 
   programs.waybar.enable = true;
+  services.mako.enable = true;
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -14,22 +15,54 @@
 
     # Example plugin from hyprland-plugins flake
     plugins = [
-      hyprland-plugins.packages.${system}.borders-plus-plus
+      # hyprland-plugins.packages.${system}.borders-plus-plus
     ];
 
     settings = {
 
-      "plugin:borders-plus-plus" = {
-        add_borders = 1;
-    
-        "col.border_1" = "rgb(ffffff)";
-        "col.border_2" = "rgb(2222ff)";
-
-        border_size_1 = 10;
-        border_size_2 = -1;
-
-        natural_rounding = "yes";
+      # General
+      general = {
+	gaps_in = 8;
+	gaps_out = 18;
+	border_size = 3;
+	col.active_border = "0xff9a7dff"; # Lavender purple
+	col.inactive-border = "0x663b2b4e";
       };
+
+      # Decoration
+      decoration = {
+	rounding = 14;
+	drop_shadow = true;
+	shadow_range = 20;
+	shadow_render_power = 3;
+	blur = {
+	  enabled = true;
+	  size = 8;
+	  passes = 2;
+	  ignore_opacity = true;
+	  new_optimizations = true;
+        };
+      };
+
+      # Animations
+      animations = {
+	enabled = true;
+	bezier = "overshoot, 0.16, 0.9, 0.25, 1.05";
+	animation = [
+	  "windows, 1, 7, overshoot, popin 60%"
+	  "border, 1, 10, default"
+	  "fade, 1, 6, default"
+	  "workspaces, 1, 6, overshoot, slide"
+	];
+      };
+
+      # Autostart bar, dock, wallpaper
+      exec-once = [
+	"swww init" # && swww img <PATH TO IMAGE> --transition-type any
+	"waybar"
+	"nwg-dock-hyprland"
+	"dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+      ];
 
       # input & keyboard
       input = {
@@ -54,12 +87,11 @@
         "SUPER, Print, exec, grimblast save screen"	# fullscreen
         "SUPER SHIFT, Print, exec, grimblast save active"	# active
         "SUPER ALT, Print, exec, grimblast save area"	# area
-      ];
 
-      # start a bar, etc.
-      exec-once = [
-        "waybar"
-        "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+        # Mouse Movement
+        "SUPER, mouse:272, movewindow"
+        "SUPER, mouse:273, resizewindow"
+        "SUPER ALT, mouse:272, resizewindow"
       ];
 
     };
@@ -81,6 +113,13 @@
       grim
       slurp
       grimblast
+      waybar
+      nwg-dock-hyprland
+      swww
+      mako
+      catppuccin-gtk
+      papirus-icon-theme
+      # bibata-cursor-theme
     ];
   };
 }

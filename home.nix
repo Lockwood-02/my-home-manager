@@ -49,6 +49,11 @@
         "SUPER, J, movefocus, d"
         "SUPER, K, movefocus, u"
         "SUPER, L, movefocus, r"
+
+        # Screenshots
+        "SUPER, Print, exec, grimblast save screen"	# fullscreen
+        "SUPER SHIFT, Print, exec, grimblast save active"	# active
+        "SUPER ALT, Print, exec, grimblast save area"	# area
       ];
 
       # start a bar, etc.
@@ -71,6 +76,11 @@
       vscode
       kitty
       rofi-wayland
+
+      # hyprland
+      grim
+      slurp
+      grimblast
     ];
   };
 }

@@ -1,22 +1,21 @@
-{ lib, pkgs, ... }:
+{ pkgs, hyprland, hyprland-plugins, system, lib, ... }:
+
 {
   nixpkgs.config.allowUnfree = true;
-  programs.kitty.enable = true;
-  
-  home.sessionVariables.NIXOS_OZONE_WL = "1";
-  
+
   wayland.windowManager.hyprland = {
     enable = true;
 
+    # Use Hyprland from the hyprland flake
+    package       = hyprland.packages.${system}.hyprland;
+    portalPackage = hyprland.packages.${system}.xdg-desktop-portal-hyprland;
+
+    # Example plugin from hyprland-plugins flake
     plugins = [
-      inputs.hyprland-plugins.packages."${pkgs.system}".borders-plus-plus
+      hyprland-plugins.packages.${system}.borders-plus-plus
     ];
 
     settings = {
-      general = with config.colorScheme.colors; {
-        "col.active_border" = "rgba(${base0E}ff) rgba(${base09}ff) 60deg";
-        "col.inactive_border" = "rgba(${base00}ff)";
-      };
 
       "plugin:borders-plus-plus" = {
         add_borders = 1;
@@ -30,20 +29,18 @@
         natural_rounding = "yes";
       };
     };
+
   };
 
-
   home = {
+    username      = "lockwood";
+    homeDirectory = "/home/lockwood";
+    stateVersion  = "25.05";
+
     packages = with pkgs; [
       hello
       vscode
       kitty
     ];
-    
-    username = "lockwood";
-    homeDirectory = "/home/lockwood";
-
-    stateVersion = "25.05";
   };
-
 }

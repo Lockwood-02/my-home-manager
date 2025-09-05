@@ -3,6 +3,8 @@
 {
   nixpkgs.config.allowUnfree = true;
 
+  programs.waybar.enable = true;
+
   wayland.windowManager.hyprland = {
     enable = true;
 
@@ -68,6 +70,7 @@
       hello
       vscode
       kitty
+      rofi-wayland
     ];
   };
 }

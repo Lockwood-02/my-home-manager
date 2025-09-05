@@ -3,6 +3,12 @@
 
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-25.05";
+    hyprland.url = "github:hyprwm/Hyprland"
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";
@@ -19,7 +25,9 @@
       homeConfigurations = {
         lockwood = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          modules = [ ./home.nix ];
+          modules = [ 
+            ./home.nix 
+	  ];
         };
       };
     };

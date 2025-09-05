@@ -28,6 +28,33 @@
 
         natural_rounding = "yes";
       };
+
+      # input & keyboard
+      input = {
+        kb_layout = "us";                  # set your layout
+        follow_mouse = 1;
+        touchpad.natural_scroll = true;
+      };
+
+      # simple binds
+      bind = [
+        "SUPER, Return, exec, kitty"       # open terminal
+        "SUPER, Q, killactive"             # close window
+        "SUPER, F, fullscreen, 1"
+        "SUPER, Space, exec, rofi -show drun"
+        "SUPER SHIFT, E, exit"             # exit Hyprland
+        "SUPER, H, movefocus, l"
+        "SUPER, J, movefocus, d"
+        "SUPER, K, movefocus, u"
+        "SUPER, L, movefocus, r"
+      ];
+
+      # start a bar, etc.
+      exec-once = [
+        "waybar"
+        "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+      ];
+
     };
 
   };
